@@ -2,6 +2,13 @@
 name = "crabber"
 version = "0.1.0"
 authors = ["Jonathan Segal <jonathannsegal@gmail.com>"]
+license = "MIT"
+description = "A pointless cli game about squashing bugs"
+readme = "README.md"
+homepage = "https://jonathansegal.io/"
+repository = "https://github.com/Jonathannsegal/crabber"
+keywords = ["cli", "game", "ferris", "bugs", "pointless"]
+categories = ["command-line-utilities", "games"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
