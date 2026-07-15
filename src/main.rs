@@ -7,10 +7,9 @@ use crossterm::{
         disable_raw_mode, enable_raw_mode, size, EnterAlternateScreen, LeaveAlternateScreen,
         SetTitle,
     },
-    Result,
 };
-use rand::{thread_rng, Rng};
-use std::io::{stdout, Write};
+use rand::{rng, Rng};
+use std::io::{stdout, Result, Write};
 
 fn print_events() -> Result<()> {
     let cactus = "🌵";
@@ -19,7 +18,7 @@ fn print_events() -> Result<()> {
     let blank = "  ";
 
     let mut stdout = stdout();
-    let mut rng = thread_rng();
+    let mut rng = rng();
     let max_x: u16 = size().unwrap().0 / 2;
     let max_y: u16 = size().unwrap().1;
     let mut player_x = max_x / 2;
@@ -29,7 +28,7 @@ fn print_events() -> Result<()> {
 
     grid[player_x as usize][player_y as usize] = 0;
 
-    grid[rng.gen_range(1, max_x) as usize][rng.gen_range(1, max_y) as usize] = 2;
+    grid[rng.random_range(1..max_x) as usize][rng.random_range(1..max_y) as usize] = 2;
 
     for x in 0..max_x {
         for y in 0..max_y {
@@ -72,12 +71,11 @@ fn print_events() -> Result<()> {
     loop {
         let event = read()?;
 
-        if event
-            == Event::Key(KeyEvent {
-                code: KeyCode::Char('c').into(),
+        if matches!(event, Event::Key(KeyEvent {
+                code: KeyCode::Char('c'),
                 modifiers: KeyModifiers::CONTROL,
-            })
-        {
+                ..
+            })) {
             break;
         }
         if event == Event::Key(KeyCode::Up.into()) {
@@ -89,14 +87,14 @@ fn print_events() -> Result<()> {
                 println!("🦀");
                 if grid[player_x as usize][player_y as usize] == 2 {
                     // grid[player_x as usize][player_y as usize] = 0;
-                    let mut i_x = rng.gen_range(0, max_x);
-                    let mut i_y = rng.gen_range(0, max_y-1);
+                    let mut i_x = rng.random_range(0..max_x);
+                    let mut i_y = rng.random_range(0..max_y-1);
 
                     while i_x == player_x {
-                        i_x = rng.gen_range(0, max_x);
+                        i_x = rng.random_range(0..max_x);
                     }
                     while i_y == player_y {
-                        i_y = rng.gen_range(0, max_y-1);
+                        i_y = rng.random_range(0..max_y-1);
                     }
                     grid[i_x as usize][i_y as usize] = 2;
                     execute!(stdout, MoveTo(i_x * 2, i_y))?;
@@ -113,14 +111,14 @@ fn print_events() -> Result<()> {
                 println!("🦀");
                 if grid[player_x as usize][player_y as usize] == 2 {
                     // grid[player_x as usize][player_y as usize] = 0;
-                    let mut i_x = rng.gen_range(0, max_x);
-                    let mut i_y = rng.gen_range(0, max_y-1);
+                    let mut i_x = rng.random_range(0..max_x);
+                    let mut i_y = rng.random_range(0..max_y-1);
 
                     while i_x == player_x {
-                        i_x = rng.gen_range(0, max_x);
+                        i_x = rng.random_range(0..max_x);
                     }
                     while i_y == player_y {
-                        i_y = rng.gen_range(0, max_y-1);
+                        i_y = rng.random_range(0..max_y-1);
                     }
                     grid[i_x as usize][i_y as usize] = 2;
                     execute!(stdout, MoveTo(i_x * 2, i_y))?;
@@ -137,14 +135,14 @@ fn print_events() -> Result<()> {
                 println!("🦀");
                 if grid[player_x as usize][player_y as usize] == 2 {
                     // grid[player_x as usize][player_y as usize] = 0;
-                    let mut i_x = rng.gen_range(0, max_x);
-                    let mut i_y = rng.gen_range(0, max_y-1);
+                    let mut i_x = rng.random_range(0..max_x);
+                    let mut i_y = rng.random_range(0..max_y-1);
 
                     while i_x == player_x {
-                        i_x = rng.gen_range(0, max_x);
+                        i_x = rng.random_range(0..max_x);
                     }
                     while i_y == player_y {
-                        i_y = rng.gen_range(0, max_y-1);
+                        i_y = rng.random_range(0..max_y-1);
                     }
                     grid[i_x as usize][i_y as usize] = 2;
                     execute!(stdout, MoveTo(i_x * 2, i_y))?;
@@ -161,14 +159,14 @@ fn print_events() -> Result<()> {
                 println!("🦀");
                 if grid[player_x as usize][player_y as usize] == 2 {
                     // grid[player_x as usize][player_y as usize] = 0;
-                    let mut i_x = rng.gen_range(0, max_x);
-                    let mut i_y = rng.gen_range(0, max_y-1);
+                    let mut i_x = rng.random_range(0..max_x);
+                    let mut i_y = rng.random_range(0..max_y-1);
 
                     while i_x == player_x {
-                        i_x = rng.gen_range(0, max_x);
+                        i_x = rng.random_range(0..max_x);
                     }
                     while i_y == player_y {
-                        i_y = rng.gen_range(0, max_y-1);
+                        i_y = rng.random_range(0..max_y-1);
                     }
                     grid[i_x as usize][i_y as usize] = 2;
                     execute!(stdout, MoveTo(i_x * 2, i_y))?;
